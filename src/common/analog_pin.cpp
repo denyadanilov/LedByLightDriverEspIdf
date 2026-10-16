@@ -5,6 +5,7 @@
 #include "esp_err.h"
 #include "esp_log.h"
 #include "hal/adc_types.h"
+#include <cmath>
 
 #define TAG "LIGHT"
 #define MAX_ADC_VALUE 4095
@@ -57,12 +58,16 @@ signal_stats analog_pin::get_signal_stats() {
     result = raw_result;
   }
 
-  signal_stats stats{
-      .raw_value = raw_result,
-      .calibrated_value = result,
-      .raw_voltage = raw_voltage,
-      .calibrated_voltage = calibrated_voltage,
-  };
+  auto bias_percentage = (raw_voltage != 0)
+                             ? std::abs(((raw_voltage - calibrated_voltage) *
+                                         100 / calibrated_voltage))
+                             : 0;
+
+  signal_stats stats{.raw_value = raw_result,
+                     .calibrated_value = result,
+                     .raw_voltage = raw_voltage,
+                     .calibrated_voltage = calibrated_voltage,
+                     .bias_percentage = bias_percentage};
 
   return stats;
 }

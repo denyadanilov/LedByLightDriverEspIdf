@@ -11,6 +11,7 @@ struct signal_stats {
   int calibrated_value;
   int raw_voltage;
   int calibrated_voltage;
+  int bias_percentage;
 };
 
 class analog_pin {

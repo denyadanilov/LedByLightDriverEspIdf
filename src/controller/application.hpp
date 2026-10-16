@@ -1,26 +1,21 @@
 #pragma once
-#include "input/abstract_light.hpp"
-#include "model/abstract_gisteresys_model.hpp"
-#include "model/abstract_sliding_model.hpp"
-#include "output/abstract_led.hpp"
+#include "common/analog_pin.hpp"
+#include "output/pin_stats_logger.hpp"
 
 namespace ledbylight {
 
 class application {
 public:
-  application(abstract_led *led, abstract_light *light,
-              abstract_sliding_model *sliding_model,
-              abstract_gisteresys_model *gisteresys_model);
+  application(common::analog_pin *analogPin,
+              output::pin_stats_logger *pinStatsLogger)
+      : analogPin(analogPin), pinStatsLogger(pinStatsLogger) {};
   void initialize();
   void update();
 
 private:
-  abstract_led *led;
-  abstract_light *light;
-  abstract_sliding_model *sliding_model;
-  abstract_gisteresys_model *gisteresys_model;
+  common::analog_pin *analogPin;
+  output::pin_stats_logger *pinStatsLogger;
 
-  // Disable the default constructor
   application() = delete;
 };
 
