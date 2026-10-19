@@ -2,14 +2,6 @@
 #include "model/gisteresys_model.hpp"
 #include <unity.h>
 
-void setUp(void) {
-  // Set up code here
-}
-
-void tearDown(void) {
-  // Clean up code here
-}
-
 void input_value_over_upper_threshold_returns_zero(void) {
   ledbylight::gisteresys_model model;
   auto limited_value = model.get_limited_value(UPPER_THRESHOLD + 1);
